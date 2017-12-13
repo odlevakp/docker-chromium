@@ -11,7 +11,7 @@ details about the used revision are in `/opt/chromium_version.txt`.
 ```sh
 docker run -d \
 -p 9222:9222 \
---name chrome \
+--name chromium \
 --cap-add=SYS_ADMIN \
 odlevakp/chromium:latest
 ```
