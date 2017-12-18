@@ -25,7 +25,7 @@ echo "Obtained revision ${REVISION}"
 
 cd /tmp
 echo "Downloading zip file"
-wget ${ZIP_URL} -O chrome-linux.zip
+wget -q ${ZIP_URL} -O chrome-linux.zip
 
 echo "Unpacking into /opt/chrome-linux"
 unzip chrome-linux.zip
