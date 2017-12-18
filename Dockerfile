@@ -1,9 +1,10 @@
 FROM ubuntu:16.04
-LABEL version "1.0"
+LABEL version "1.1"
 LABEL description "Headless chromium builds."
 
 ENV APT_PACKAGES wget curl unzip apt-transport-https ca-certificates
 ENV CHROME_USER chrome
+ENV CHROMIUM_REVISION latest
 
 RUN mkdir -p /home/${CHROME_USER} && \
     groupadd --system ${CHROME_USER} && \
