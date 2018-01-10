@@ -4,7 +4,7 @@ LABEL description "Headless chromium builds."
 
 ENV APT_PACKAGES wget curl unzip apt-transport-https ca-certificates
 ENV CHROME_USER chrome
-ENV CHROMIUM_REVISION latest
+ENV CHROMIUM_REVISION 528281
 
 RUN mkdir -p /home/${CHROME_USER} && \
     groupadd --system ${CHROME_USER} && \
