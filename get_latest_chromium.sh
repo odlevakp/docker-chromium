@@ -30,6 +30,7 @@ wget -q ${ZIP_URL} -O chrome-linux.zip
 echo "Unpacking into /opt/chrome-linux"
 unzip chrome-linux.zip
 mv chrome-linux /opt/chrome-linux
+rm -fr chrome-linux.zip
 
 echo "Revision used for build: ${REVISION}
 Details: http://crrev.com/${REVISION}
