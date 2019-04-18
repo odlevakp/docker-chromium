@@ -1,8 +1,18 @@
 FROM ubuntu:16.04
-LABEL version "1.2"
+LABEL version "1.3"
 LABEL description "Headless chromium builds."
 
-ENV APT_PACKAGES wget curl unzip apt-transport-https ca-certificates
+ENV APT_PACKAGES wget curl unzip apt-transport-https ca-certificates software-properties-common
+
+# Proper font support.
+ENV FONT_MISC fonts-symbola ttf-ubuntu-font-family ttf-bitstream-vera fonts-twemoji-svginot
+ENV FONT_CHI fonts-arphic-ukai fonts-arphic-uming
+ENV FONT_JPN fonts-ipafont-mincho fonts-ipafont-gothic
+ENV FONT_KOR fonts-unfonts-core
+ENV FONT_THA fonts-thai-tlwg
+
+ENV FONT_PACKAGES ${FONT_MISC} ${FONT_CHI} ${FONT_JPN} ${FONT_KOR} ${FONT_THA}
+
 ENV CHROME_USER chrome
 ENV CHROMIUM_REVISION 642904
 
@@ -21,7 +31,8 @@ RUN apt-get update && \
     echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections && \
     echo ttf-mscorefonts-installer msttcorefonts/dldir select /root/ms-fonts/ | debconf-set-selections && \
     bash /opt/get_fonts.sh && \
-    apt-get install --yes ttf-mscorefonts-installer
+    apt-add-repository --yes ppa:eosrei/fonts && \
+    apt-get install --yes ttf-mscorefonts-installer ${FONT_PACKAGES}
 
 # Install chromium.
 RUN apt-get install --yes --no-install-recommends \
