@@ -32,6 +32,7 @@ RUN apt-get update && \
     echo ttf-mscorefonts-installer msttcorefonts/dldir select /root/ms-fonts/ | debconf-set-selections && \
     bash /opt/get_fonts.sh && \
     apt-add-repository --yes ppa:eosrei/fonts && \
+    apt-get update && \
     apt-get install --yes ttf-mscorefonts-installer ${FONT_PACKAGES}
 
 # Install chromium.
