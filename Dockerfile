@@ -1,8 +1,10 @@
 FROM ubuntu:16.04
-LABEL version "1.3"
-LABEL description "Headless chromium builds."
+LABEL version "1.4"
+LABEL description "Headless chromium with rich font support."
 
-ENV APT_PACKAGES wget curl unzip apt-transport-https ca-certificates software-properties-common
+ENV DEBIAN_FRONTEND noninteractive
+
+ENV APT_PACKAGES wget curl unzip apt-transport-https apt-utils ca-certificates software-properties-common
 
 # Proper font support.
 ENV FONT_MISC fonts-symbola ttf-ubuntu-font-family ttf-bitstream-vera fonts-twemoji-svginot
@@ -29,8 +31,10 @@ ADD get_fonts.sh /opt/get_fonts.sh
 RUN apt-get update && \
     apt-get install --yes ${APT_PACKAGES} && \
     echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections && \
-    echo ttf-mscorefonts-installer msttcorefonts/dldir select /root/ms-fonts/ | debconf-set-selections && \
-    bash /opt/get_fonts.sh && \
+    # Fix if font download in mscorefonts-installer is not working.
+    # echo ttf-mscorefonts-installer msttcorefonts/dldir select /opt/ms-fonts | debconf-set-selections && \
+    # bash /opt/get_fonts.sh && \
+    # echo '127.0.0.1 downloads.sourceforge.net' >> /etc/hosts && \
     apt-add-repository --yes ppa:eosrei/fonts && \
     apt-get update && \
     apt-get install --yes ttf-mscorefonts-installer ${FONT_PACKAGES}
@@ -39,6 +43,7 @@ RUN apt-get update && \
 RUN apt-get install --yes --no-install-recommends \
     $( apt-cache depends chromium-browser | awk '/\ Depends:/{print$2}' ) && \
     bash /opt/get_latest_chromium.sh && \
+    fc-cache --force --verbose && \
     apt-get remove --yes ${APT_PACKAGES} && \
     chown -R ${CHROME_USER}:${CHROME_USER} /opt/chrome-linux && \
     rm -rf /var/lib/apt/lists/*
