@@ -16,7 +16,7 @@ ENV FONT_THA fonts-thai-tlwg
 ENV FONT_PACKAGES ${FONT_MISC} ${FONT_CHI} ${FONT_JPN} ${FONT_KOR} ${FONT_THA}
 
 ENV CHROME_USER chrome
-ENV CHROMIUM_REVISION latest
+ENV CHROMIUM_REVISION 789442
 
 RUN mkdir -p /home/${CHROME_USER} && \
     groupadd --system ${CHROME_USER} && \
