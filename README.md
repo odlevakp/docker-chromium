@@ -10,5 +10,5 @@ docker run -d \
 -p 9222:9222 \
 --name chromium \
 --cap-add=SYS_ADMIN \
-odlevakp/chromium:latest
+bengroup/chromium:latest
 ```
